@@ -48,7 +48,7 @@ function App() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (ref.current) {
-      ForceGraph3D()(ref.current)
+      const graph = ForceGraph3D()(ref.current)
         .graphData({ links, nodes })
         .backgroundColor("#fff")
         .linkColor(() => "#717171")
@@ -64,6 +64,21 @@ function App() {
               <small>${node.text.join("<br/>")}</small>
             </div>
           `;
+        })
+        .onNodeClick((node) => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+          graph.cameraPosition(
+            {
+              x: node.x * distRatio,
+              y: node.y * distRatio,
+              z: node.z * distRatio,
+            }, // new position
+            node, // lookAt ({ x, y, z })
+            3000 // ms transition duration
+          );
         })
         .nodeRelSize(nodeSize)
         .nodeThreeObject((threeObj) => {
