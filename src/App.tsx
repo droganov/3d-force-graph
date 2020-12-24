@@ -8,22 +8,40 @@ import graph from "./graph.json";
 
 const { dataLinks, dataNodes } = graph.data.networkData;
 
-const links = dataLinks.map(({ source, target }) => ({
+const links = dataLinks.map(({ source, target, typeLink }) => ({
   source,
   target,
+  typeLink,
 }));
 const nodes = dataNodes.map(
-  ({ id, screenName: name, degree: val, profilePhoto }) => ({
+  ({ id, screenName: name, degree, profilePhoto }) => ({
     id,
     name,
     profilePhoto,
-    val,
+    val: degree * 10,
   })
 );
 
 const nodeSize = 8;
 const unknownPic = "./avatar.png";
 const alphaPic = "./alpha.png";
+
+function linkColor({ typeLink }) {
+  switch (typeLink) {
+    case "retweet":
+      return 0x03f4ff;
+    case "mention":
+      return 0x00a9c0;
+    case "quote":
+      return 0x6066ff;
+    case "reply":
+      return 0x753bd2;
+    case "source":
+      return 0xadb4c8;
+    default:
+      return 0x000;
+  }
+}
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);
@@ -34,6 +52,9 @@ function App() {
         .backgroundColor("#fff")
         .linkColor(() => "#717171")
         .linkOpacity(0.08)
+        .linkDirectionalParticles(1)
+        .linkDirectionalParticleWidth(1)
+        .linkDirectionalParticleColor(linkColor)
         .nodeRelSize(nodeSize)
         .nodeThreeObject((threeObj) => {
           const { profilePhoto } = threeObj as { profilePhoto: string };
@@ -50,8 +71,10 @@ function App() {
           const sprite = new THREE.Sprite(material);
           sprite.scale.set(nodeSize, nodeSize, nodeSize);
           return sprite;
-        })
-        .nodeAutoColorBy("user");
+        });
+      return () => {
+        ref.current?.removeChild(ref.current.lastChild);
+      };
     }
   });
   return <div ref={ref} />;
