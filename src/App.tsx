@@ -39,7 +39,7 @@ function App() {
           const { profilePhoto } = threeObj as { profilePhoto: string };
           const alphaMap = new THREE.TextureLoader().load(alphaPic);
           const imgTexture = new THREE.TextureLoader().load(
-            profilePhoto || unknownPic
+            profilePhoto ? `./twitter/${threeObj.id}.jpg` : unknownPic
           );
           const material = new THREE.SpriteMaterial({
             alphaMap,
