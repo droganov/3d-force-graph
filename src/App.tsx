@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import ForceGraph3D from "3d-force-graph";
 import * as THREE from "three";
-// import "./App.css";
+import "./App.css";
 
 import graph from "./graph.json";
 
@@ -55,6 +55,15 @@ function App() {
         .linkDirectionalParticles(1)
         .linkDirectionalParticleWidth(1)
         .linkDirectionalParticleColor(linkColor)
+        .nodeLabel((node) => {
+          console.log("node: ", node);
+          return `
+            <div class="baloon">
+              <h6>${node.id}</h6>
+              <small>We can render tweet text here</small>
+            </div>
+          `;
+        })
         .nodeRelSize(nodeSize)
         .nodeThreeObject((threeObj) => {
           const { profilePhoto } = threeObj as { profilePhoto: string };
