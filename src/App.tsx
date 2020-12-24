@@ -60,7 +60,7 @@ function App() {
           return `
             <div class="baloon">
               <h6>${node.id}</h6>
-              <small>We can render tweet text here</small>
+              <small>We can render tweet text here if we include it to node data.</small>
             </div>
           `;
         })

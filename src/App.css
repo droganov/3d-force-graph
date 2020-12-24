@@ -2,6 +2,7 @@
   color: #fff;
   background-color: rgba(0, 0, 0, 0.48);
   border-radius: 4px;
+  max-width: 16em;
   padding: 8px;
 }
 
