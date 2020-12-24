@@ -14,10 +14,11 @@ const links = dataLinks.map(({ source, target, typeLink }) => ({
   typeLink,
 }));
 const nodes = dataNodes.map(
-  ({ id, screenName: name, degree, profilePhoto }) => ({
+  ({ id, screenName: name, degree, profilePhoto, text }) => ({
     id,
     name,
     profilePhoto,
+    text,
     val: degree * 10,
   })
 );
@@ -60,7 +61,7 @@ function App() {
           return `
             <div class="baloon">
               <h6>${node.id}</h6>
-              <small>We can render tweet text here if we include it to node data.</small>
+              <small>${node.text.join("<br/>")}</small>
             </div>
           `;
         })
