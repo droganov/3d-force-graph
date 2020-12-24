@@ -81,9 +81,9 @@ function App() {
           sprite.scale.set(nodeSize, nodeSize, nodeSize);
           return sprite;
         });
-      return () => {
-        ref.current?.removeChild(ref.current.lastChild);
-      };
+      // return () => {
+      //   ref.current?.removeChild(ref.current.lastChild);
+      // };
     }
   });
   return <div ref={ref} />;
